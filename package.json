@@ -1,0 +1,15 @@
+{
+  "name": "pedidos-socket-backend",
+  "version": "1.0.0",
+  "description": "Backend realtime de pedidos online",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "author": "Christian Dionisio",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
