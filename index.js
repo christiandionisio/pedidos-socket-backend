@@ -11,16 +11,13 @@ app.use(express.json());
 const server = http.createServer(app);
 
 // Iniciar servidor socket.io
-const io = new Server(server);
+module.exports.io = new Server(server);
+require('./sockets/sockets');
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
   });
 
-// Test coneccion socket.io
-io.on('connection', (socket) => {
-    console.log('a user connected');
-});
 
 // Escuuchar peticiones
 server.listen(3001, () => {
