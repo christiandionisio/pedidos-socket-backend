@@ -6,35 +6,24 @@ const { io } = require('../index');
 io.on('connection', (client) => {
     console.log('Cliente conectado');
 
-    // TODO: Verificar autenticacion
-
-    console.log('Cliente Autenticado');
-
     // Ingresar a un usuario a una sala especifica
     // Sala Global, cliend.id, {uid}
     // client.join(uid);
     
-    // Escuchar del cliente el mensaje-personal
+    // Registrar pedidos y notificar al administrador
     client.on('ejecutar-pedido', async (payload) => {
-        // TODO: grabar mensaje
         console.log('Ejecutar pedido', payload);
-
-        const factura = {
-            idCliente: '6191df9498f460487f808242',
-            estado: 'PENDIENTE'
-        }
-
         try {
-            const response = await registrarFactura(factura);
+            const response = await registrarFactura(payload);
             console.log(response.headers);
+
+            // TODO: Registrar pedidos en la base de datos
             
         } catch (error) {
             console.log(error.response.status);
         }
 
-
-
-        
+        // TODO: Notificar al administrador        
 
         // io.to(payload.para).emit('mensaje-personal', payload);
         //io.emit('recibir-pedido', payload);
