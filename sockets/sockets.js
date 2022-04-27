@@ -1,4 +1,5 @@
 
+const { registrarFactura } = require('../controllers/facturas');
 const { io } = require('../index');
 
 // Mensajes de Sockets
@@ -18,8 +19,25 @@ io.on('connection', (client) => {
         // TODO: grabar mensaje
         console.log('Ejecutar pedido', payload);
 
+        const factura = {
+            idCliente: '6191df9498f460487f808242',
+            estado: 'PENDIENTE'
+        }
+
+        try {
+            const response = await registrarFactura(factura);
+            console.log(response.headers);
+            
+        } catch (error) {
+            console.log(error.response.status);
+        }
+
+
+
+        
+
         // io.to(payload.para).emit('mensaje-personal', payload);
-        io.emit('ejecutar-pedido', payload);
+        //io.emit('recibir-pedido', payload);
     });
 
     client.on('estado-pedido', (payload) => {
