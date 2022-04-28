@@ -1,5 +1,6 @@
 
 const { registrarFactura } = require('../controllers/facturas');
+const { registrarPedido } = require('../controllers/pedidos');
 const { io } = require('../index');
 
 // Mensajes de Sockets
@@ -14,11 +15,17 @@ io.on('connection', (client) => {
     client.on('ejecutar-pedido', async (payload) => {
         console.log('Ejecutar pedido', payload);
         try {
-            const response = await registrarFactura(payload);
-            console.log(response.headers);
+            const responseFactura = await registrarFactura(payload);
+            const idFactura = responseFactura.headers.facturaid;
 
-            // TODO: Registrar pedidos en la base de datos
-            
+            if (payload.pedidos) {
+                payload.pedidos.forEach( async (pedido) => {
+                    await registrarPedido({ idFactura, ...pedido }, payload.token);
+                });
+            } else {
+                console.log('No hay pedidos para registrar');
+            }
+
         } catch (error) {
             console.log(error.response.status);
         }
