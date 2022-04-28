@@ -25,15 +25,14 @@ io.on('connection', (client) => {
             } else {
                 console.log('No hay pedidos para registrar');
             }
+            
+            io.emit('recibir-pedido', idFactura);
 
         } catch (error) {
-            console.log(error.response.status);
+            console.log('Error ', error.response.status);
         }
 
-        // TODO: Notificar al administrador        
-
         // io.to(payload.para).emit('mensaje-personal', payload);
-        //io.emit('recibir-pedido', payload);
     });
 
     client.on('estado-pedido', (payload) => {
