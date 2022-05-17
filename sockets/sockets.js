@@ -36,7 +36,7 @@ io.on('connection', (client) => {
     });
 
     client.on('estado-pedido', (payload) => {
-        // io.to(payload.para).emit('mensaje-personal', payload);
+        
         io.emit('ejecutar-pedido', payload);
         console.log('Estado del pedido');
     });

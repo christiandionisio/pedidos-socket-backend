@@ -40,6 +40,25 @@ const registrarFactura = (payload) => {
 }
 
 
+const modificarEstadoFactura = (payload) => {
+    return axios.put('http://localhost:8080/facturas', payload.factura, {
+        headers: {
+            'Authorization': `Bearer ${payload.token}`
+        }
+    });
+
+}
+
+const buscarFacturaPorId = (payload) => {
+    return axios.get('http://localhost:8080/facturas', payload.factura.id, {
+        headers: {
+            'Authorization': `Bearer ${payload.token}`
+        }
+    });
+
+}
+
 module.exports = {
-    registrarFactura
+    registrarFactura,
+    modificarEstadoFactura
 }
