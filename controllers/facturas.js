@@ -60,5 +60,6 @@ const buscarFacturaPorId = (payload) => {
 
 module.exports = {
     registrarFactura,
-    modificarEstadoFactura
+    modificarEstadoFactura,
+    buscarFacturaPorId
 }

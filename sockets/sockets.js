@@ -1,5 +1,5 @@
 
-const { registrarFactura } = require('../controllers/facturas');
+const { registrarFactura, modificarEstadoFactura } = require('../controllers/facturas');
 const { registrarPedido } = require('../controllers/pedidos');
 const { io } = require('../index');
 
@@ -35,10 +35,21 @@ io.on('connection', (client) => {
         // io.to(payload.para).emit('mensaje-personal', payload);
     });
 
-    client.on('estado-pedido', (payload) => {
+    client.on('atender-pedido', async (payload) => {
+
+        console.log('Atender pedido', payload);
+
+        try {
+            const responseFactura = await modificarEstadoFactura(payload);
+            if (responseFactura.status === 204) {
+                io.emit('escuchar-estado-pedido', payload.factura.id);
+            }
+
+
+        } catch (error) {
+            console.log('Error ', error.response.status);
+        }
         
-        io.emit('ejecutar-pedido', payload);
-        console.log('Estado del pedido');
     });
 
 
