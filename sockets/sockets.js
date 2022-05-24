@@ -35,18 +35,20 @@ io.on('connection', (client) => {
         // io.to(payload.para).emit('mensaje-personal', payload);
     });
 
-    client.on('atender-pedido', async (payload) => {
+    client.on('atender-pedido', async (payload, callback) => {
 
         console.log('Atender pedido', payload);
 
         try {
             const responseFactura = await modificarEstadoFactura(payload);
             if (responseFactura.status === 204) {
+                callback('OK');
                 io.emit('escuchar-estado-pedido', payload.factura.id);
             }
 
 
         } catch (error) {
+            callback('ERROR');
             console.log('Error ', error.response.status);
         }
         
