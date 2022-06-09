@@ -54,5 +54,23 @@ io.on('connection', (client) => {
         
     });
 
+    client.on('confirmar-pedido-listo', async (payload, callback) => {
+
+        console.log('Pedido listo socket', payload);
+
+        try {
+            const responseFactura = await modificarEstadoFactura(payload);
+            if (responseFactura.status === 204) {
+                callback('OK');
+                io.emit('escuchar-pedido-en-camino', payload.factura.id);
+            }
+
+
+        } catch (error) {
+            callback('ERROR');
+            console.log('Error ', error.response.status);
+        }
+        
+    });
 
 });
